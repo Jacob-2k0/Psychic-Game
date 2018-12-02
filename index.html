@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Psychic Game</title>
+
+  <style>
+    ol {
+    list-style: none;
+    }
+    li {
+      float : left;
+      margin: 0 5px 0 0;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div>
+    <h1>Psychic Game</h1><hr>
+    <p id="directions-text">Try to guess the letter that the computer chose by selecting keys.</p>
+    <p id="userchoice-text">You chose:</p>
+    <p id="guesscount-text">Guesses Remaining:</p>
+    <p id="user-wins">Wins:</p>
+    <p id="user-losses">Losses:</p>
+    <p id="already-guessed">Already Guessed: <ol id="list"></ol></p>
+  </div>
+
+  <script type="text/javascript">
+
+    var wins=0;
+    var losses=0;
+    var ties=0;
+    var guessCount = 8;
+    var alreadyGuessed = [];
+    //var gameOver = 0;
+
+    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+    var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+    var directionsText = document.getElementById("directions-text");
+    var userChoiceText = document.getElementById("userchoice-text");
+    var guessCountText = document.getElementById("guesscount-text");
+    var userWins = document.getElementById("user-wins");
+    var userLosses = document.getElementById("user-losses");
+
+    // This function is run whenever the user presses a key.
+    document.onkeyup = function(event) {
+
+      // Determines which key was pressed.
+      var userGuess = event.key;
+      
+      // Randomly chooses a choice from the options array. This is the Computer's guess.
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+
+        // Display the user and computer guesses.
+        userChoiceText.textContent = "You chose: " + userGuess;
+        userWins.textContent = "Wins: " + wins ;
+        userLosses.textContent = "Losses: " + losses ;
+        guessCountText.textContent = "Guesses Remaining: " + guessCount ;
+                
+          //alreadyGuessed.includes(userGuess) ? "" : alreadyGuessed.push(userGuess); is the same as following if statement.
+          
+          if(alreadyGuessed.includes(userGuess) === false) {
+            alreadyGuessed.push(userGuess);
+            guessCount--;
+
+            var node = document.createElement("Li");
+            var text = userGuess; 
+            var textnode=document.createTextNode(text);
+            node.appendChild(textnode);
+            document.getElementById("list").appendChild(node);
+          }
+          console.log(alreadyGuessed);
+
+
+if(guessCount === 0) {
+          console.log("count = 0"); 
+            losses++;
+            guessCount=8;
+            alreadyGuessed.length = 0;
+            while (list.hasChildNodes()) {
+             list.removeChild(list.lastChild);
+            }
+        }
+    if (userGuess === computerGuess) {
+      wins++;
+      guessCount=8;
+      alreadyGuessed.length = 0;
+      guessCountText.textContent = "Guesses Remaining: " + "0" ;
+      while (list.hasChildNodes()) {
+        list.removeChild(list.lastChild);
+      }
+    } else if(userGuess != computerGuess) {
+      //guessCount--;\
+
+      console.log("guess != comp"); 
+    }  
+    //if(document.getElementById("guesscount-text") === "0") {
+     // console.log("here");
+     // while (list.hasChildNodes()) {
+     //   list.removeChild(list.lastChild);
+     // }
+  //  }
+
+    };
+
+  </script>
+
+</body>
+
+</html>
